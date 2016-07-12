@@ -25,9 +25,27 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 
 #########################################################
-### your code goes here ###
+def emailML():
+    
+    # create the classifier
+    from sklearn.naive_bayes import GaussianNB
+    clf = GaussianNB()
 
+    # train the classifier
+    t0 = time()
+    clf.fit( features_train, labels_train)
+    print "training time:", round(time()-t0, 3), "s"
 
+    # make prediction
+    t0 = time()
+    prediction = clf.predict( features_test )
+    print "prediction time:", round(time()-t0, 3), "s"
+    print prediction
+
+    # evaluate accuracy
+    accuracy = clf.score( features_test, labels_test)
+    print accuracy
 #########################################################
 
+emailML()
 
