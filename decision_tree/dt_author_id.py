@@ -19,12 +19,34 @@ from email_preprocess import preprocess
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
-
-
+print "Number of features:", len(features_train[0])
+#quit()
+#features_train = features_train[:len(features_train)/100] 
+#labels_train = labels_train[:len(labels_train)/100]
 
 #########################################################
-### your code goes here ###
 
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier(min_samples_split=40)
+
+t0 = time()
+clf.fit( features_train, labels_train )
+print "fitting time:", round(time()-t0, 3), "s"
+
+t0 = time()
+prediction = clf.predict( features_test )
+print "prediction time:", round(time()-t0, 3), "s"
+
+chris = 0
+for user in prediction:
+    if user == 1:
+        chris += 1
+
+print "predictions for chris", chris
+
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score( prediction, labels_test )
+print "accuracy:", accuracy
 
 #########################################################
 
